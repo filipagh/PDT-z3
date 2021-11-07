@@ -1,7 +1,5 @@
 #zadanie 3
-
 ###autor: Filip Agh
-
 ###git: [link](https://github.com/filipagh/PDT-z3)
 
 
@@ -155,13 +153,12 @@ from (select st_centroid(st_transform(p.way, 4326)) as centroid
 | st\_x | st\_y | srid |
 | :--- | :--- | :--- |
 | 17.099409275096463 | 48.150980221558584 | 4326 |
-
 ![img_9.png](img_9.png)
 # uloha 11
 
 ```
 select st_intersection(st_transform(r.way, 4326)::geometry, line.way::geometry) as way
-from planet_osm_roads as r,
+from planet_osm_line as r,
      (select st_buffer(st_transform(st_intersection(malacky.way::geography, pezinok.way::geography)::geometry,
                                     4326)::geography, 10000) as way
       from (select osm_id, st_transform(way, 4326) as way, name
@@ -173,13 +170,10 @@ from planet_osm_roads as r,
             where osm_id = '-388211') as pezinok
       limit 1) as line
 where st_intersects(st_transform(r.way, 4326)::geometry, line.way::geometry) is true
-  and r.railway is NULL
-  and r.boundary is NULL
+  and r.highway is not null
 
 ```
-
-![img_11.png](img_11.png)
-
+![img_12.png](img_12.png)
 # uloha 12
 
 ```
@@ -190,7 +184,7 @@ from ku_0 as k,
            (select st_transform(
                            r.way, 4326) as way,
                    osm_id
-            from planet_osm_roads as r,
+            from planet_osm_line as r,
                  (
                      select st_buffer(st_centroid(st_transform(
                              malacky.way, 4326))::geography,
@@ -202,8 +196,7 @@ from ku_0 as k,
                           planet_osm_roads as r
                      limit 1) as aprox
             where st_within(st_transform(r.way, 4326)::geometry, aprox.way::geometry) is true
-              and r.railway is NULL
-              and r.boundary is NULL) as r
+              and r.highway is not NULL) as r
       where st_contains(okres.way::geometry, st_transform(r.way, 4326)::geometry) is true
       order by length desc
       limit 1) as road
