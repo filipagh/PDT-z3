@@ -155,6 +155,7 @@ from (select st_centroid(st_transform(p.way, 4326)) as centroid
 | st\_x | st\_y | srid |
 | :--- | :--- | :--- |
 | 17.099409275096463 | 48.150980221558584 | 4326 |
+
 ![img_9.png](img_9.png)
 # uloha 11
 
