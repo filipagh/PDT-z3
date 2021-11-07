@@ -1,3 +1,8 @@
+#zadanie 3
+###autor: Filip Agh
+###git: [link](https://github.com/filipagh/PDT-z3)
+
+
 # uloha 1
 
 ```
